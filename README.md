@@ -1,1 +1,1 @@
-# jxpert-pokedex
+# proyecto de Alejandro Maya

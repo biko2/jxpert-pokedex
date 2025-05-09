@@ -1,1 +1,1 @@
-# proyecto de Alex Maya
+# Proyecto de Alejandro Maya

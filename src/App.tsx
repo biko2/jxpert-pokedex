@@ -19,6 +19,7 @@ import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
 const muyVariable = "";
+
 /**
  *  Iconos de los tipos de Pokémon
  */

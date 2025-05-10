@@ -18,7 +18,7 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
-
+const muyVariable = "";
 /**
  *  Iconos de los tipos de Pokémon
  */
@@ -107,12 +107,12 @@ export const App = () => {
         regEnd = 151;
       }
       const { results }: any = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?offset=${regStart}&limit=${regEnd}`
+        `https://pokeapi.co/api/v2/pokemon?offset=${regStart}&limit=${regEnd}`,
       ).then((res) => res.json());
       const result = await Promise.all(
         results.map(
-          async ({ url }) => await fetch(url).then((res) => res.json())
-        )
+          async ({ url }) => await fetch(url).then((res) => res.json()),
+        ),
       );
       setResult(result);
       setFinalResult(result);
@@ -129,9 +129,9 @@ export const App = () => {
         (res) =>
           res.name.includes(busqueda.toLowerCase()) ||
           !!res.types.find((type) =>
-            type.type.name.startsWith(busqueda.toLowerCase())
-          )
-      )
+            type.type.name.startsWith(busqueda.toLowerCase()),
+          ),
+      ),
     );
     setFltr(false);
   }, [result[0]?.id, busqueda]);
@@ -146,7 +146,7 @@ export const App = () => {
             const aStat = a.stats.find((stat) => stat.stat.name === "hp");
             const bStat = b.stats.find((stat) => stat.stat.name === "hp");
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
       if (sorting === "attack") {
@@ -155,7 +155,7 @@ export const App = () => {
             const aStat = a.stats.find((stat) => stat.stat.name === "attack");
             const bStat = b.stats.find((stat) => stat.stat.name === "attack");
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
       if (sorting === "defense") {
@@ -164,33 +164,33 @@ export const App = () => {
             const aStat = a.stats.find((stat) => stat.stat.name === "defense");
             const bStat = b.stats.find((stat) => stat.stat.name === "defense");
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
       if (sorting === "special-attack") {
         setFinalResult((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
-              (stat) => stat.stat.name === "special-attack"
+              (stat) => stat.stat.name === "special-attack",
             );
             const bStat = b.stats.find(
-              (stat) => stat.stat.name === "special-attack"
+              (stat) => stat.stat.name === "special-attack",
             );
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
       if (sorting === "special-defense") {
         setFinalResult((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
-              (stat) => stat.stat.name === "special-defense"
+              (stat) => stat.stat.name === "special-defense",
             );
             const bStat = b.stats.find(
-              (stat) => stat.stat.name === "special-defense"
+              (stat) => stat.stat.name === "special-defense",
             );
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
       if (sorting === "speed") {
@@ -199,7 +199,7 @@ export const App = () => {
             const aStat = a.stats.find((stat) => stat.stat.name === "speed");
             const bStat = b.stats.find((stat) => stat.stat.name === "speed");
             return bStat.base_stat - aStat.base_stat;
-          })
+          }),
         );
       }
     }
@@ -207,7 +207,7 @@ export const App = () => {
       setFinalResult((prev) =>
         [...prev].sort((a, b) => {
           return a.id - b.id;
-        })
+        }),
       );
     }
   }, [finalResult[0]?.id, sorting]);

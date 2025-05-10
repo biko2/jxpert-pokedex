@@ -18,7 +18,7 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
-const muyVariable2 = "";
+const muyVariable3 = "";
 
 /**
  *  Iconos de los tipos de Pokémon

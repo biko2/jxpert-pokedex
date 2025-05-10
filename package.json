@@ -8,10 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postinstall": "husky"
+    "postinstall": "husky",
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*{js, jsx, ts, tsx}": [
+    "**/*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ]

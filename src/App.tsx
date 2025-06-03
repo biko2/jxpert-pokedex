@@ -71,29 +71,29 @@ export const App = () => {
         regEnd = 151;
       } else if (reg === 'johto') {
         regStart = 151;
-        regEnd = 251;
+        regEnd = 100;
       } else if (reg === 'hoenn') {
         regStart = 251;
-        regEnd = 386;
+        regEnd = 135;
       } else if (reg === 'sinnoh') {
         regStart = 386;
-        regEnd = 494;
+        regEnd = 108;
       }
       else if (reg === 'unova') {
         regStart = 494;
-        regEnd = 649;
+        regEnd = 155;
       } else if (reg === 'kalos') {
         regStart = 649;
-        regEnd = 721;
+        regEnd = 72;
       } else if (reg === 'alola') {
         regStart = 721;
-        regEnd = 809;
+        regEnd = 88;
       } else if (reg === 'galar') {
         regStart = 809;
-        regEnd = 905;
+        regEnd = 96;
       } else if (reg === 'paldea') {
         regStart = 905;
-        regEnd = 1025;
+        regEnd = 120;
       } else {
         regStart = 0;
         regEnd = 151;

@@ -64,10 +64,7 @@ export const App = () => {
   const [sortBy, setSortBy] = useState<any>("default");
 
   useEffect(() => {
-    /**
-     *  Carga de datos de Pokémons y gestión de estado de cargando.
-     */
-    const getData = async () => {
+    const getPokemonsData = async () => {
       setLoading(true);
       setFiltering(true);
 
@@ -115,11 +112,9 @@ export const App = () => {
       setFinalResult(result);
       setLoading(false);
     };
-    getData();
+    getPokemonsData();
   }, [region]);
-  /**
-   * Filters results based on input query term.
-   */
+
   useEffect(() => {
     setFinalResult(
       result.filter(
@@ -132,9 +127,7 @@ export const App = () => {
     );
     setFiltering(false);
   }, [result[0]?.id, searchTerm]);
-  /**
-   * Sorts results based on selected sortBy criteria.
-   */
+
   useEffect(() => {
     if (sortBy !== "default") {
       if (sortBy === "hp") {
@@ -656,6 +649,7 @@ export const App = () => {
             </ul>
           )}
         </section>
+
         {!loading && finalResult.length === 0 && (
           <p className="noresults">No results for "{searchTerm}"</p>
         )}

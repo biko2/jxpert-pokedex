@@ -89,15 +89,11 @@ export const App = () => {
   }, [region]);
 
   useEffect(() => {
-    setProcessedPokemons(
-      pokemons.filter(
-        (res) =>
-          res.name.includes(searchTerm.toLowerCase()) ||
-          !!res.types.find((type) =>
-            type.type.name.startsWith(searchTerm.toLowerCase())
-          )
-      )
-    );
+    const hasNameOrType = ({ name, types }: Pokemon) =>
+      name.includes(searchTerm.toLowerCase()) ||
+      types.some((type) => type.type.name.startsWith(searchTerm.toLowerCase()));
+
+    setProcessedPokemons(pokemons.filter(hasNameOrType));
     setFiltering(false);
   }, [pokemons[0]?.id, searchTerm]);
 

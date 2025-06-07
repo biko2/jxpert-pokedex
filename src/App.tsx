@@ -14,7 +14,7 @@ export const App = () => {
     sortBy,
     loading,
     filtering,
-    pokemons: processedPokemons,
+    pokemons,
     onSearchChange,
     onRegionChange,
     onSortChange,
@@ -47,9 +47,9 @@ export const App = () => {
             </ul>
           )}
 
-          {!filtering && !loading && processedPokemons.length > 0 && (
+          {!filtering && !loading && pokemons.length > 0 && (
             <ul className="grid">
-              {processedPokemons.map((pokemon) => {
+              {pokemons.map((pokemon) => {
                 return (
                   <li key={`pokemon-card-${pokemon.id}`}>
                     <PokemonCard pokemon={pokemon} />
@@ -60,7 +60,7 @@ export const App = () => {
           )}
         </section>
 
-        {!loading && processedPokemons.length === 0 && (
+        {!loading && pokemons.length === 0 && (
           <p className="noresults">No results for "{searchTerm}"</p>
         )}
       </main>

@@ -103,62 +103,76 @@ export const App = () => {
       if (sortBy === "healthPoints") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find((stat) => stat.stat.name === "hp");
-            const bStat = b.stats.find((stat) => stat.stat.name === "hp");
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "hp")?.base_stat ?? 0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "hp")?.base_stat ?? 0;
+            return bStat - aStat;
           })
         );
       }
       if (sortBy === "attack") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find((stat) => stat.stat.name === "attack");
-            const bStat = b.stats.find((stat) => stat.stat.name === "attack");
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "attack")?.base_stat ??
+              0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "attack")?.base_stat ??
+              0;
+            return bStat - aStat;
           })
         );
       }
       if (sortBy === "defense") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find((stat) => stat.stat.name === "defense");
-            const bStat = b.stats.find((stat) => stat.stat.name === "defense");
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "defense")?.base_stat ??
+              0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "defense")?.base_stat ??
+              0;
+            return bStat - aStat;
           })
         );
       }
       if (sortBy === "specialAttack") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find(
-              (stat) => stat.stat.name === "special-attack"
-            );
-            const bStat = b.stats.find(
-              (stat) => stat.stat.name === "special-attack"
-            );
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "special-attack")
+                ?.base_stat ?? 0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "special-attack")
+                ?.base_stat ?? 0;
+            return bStat - aStat;
           })
         );
       }
       if (sortBy === "specialDefense") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find(
-              (stat) => stat.stat.name === "special-defense"
-            );
-            const bStat = b.stats.find(
-              (stat) => stat.stat.name === "special-defense"
-            );
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "special-defense")
+                ?.base_stat ?? 0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "special-defense")
+                ?.base_stat ?? 0;
+            return bStat - aStat;
           })
         );
       }
       if (sortBy === "speed") {
         setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
-            const aStat = a.stats.find((stat) => stat.stat.name === "speed");
-            const bStat = b.stats.find((stat) => stat.stat.name === "speed");
-            return bStat.base_stat - aStat.base_stat;
+            const aStat =
+              a.stats.find((stat) => stat.stat.name === "speed")?.base_stat ??
+              0;
+            const bStat =
+              b.stats.find((stat) => stat.stat.name === "speed")?.base_stat ??
+              0;
+            return bStat - aStat;
           })
         );
       }

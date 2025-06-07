@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Pokemon, PokemonList, Region, SortItem, Stat } from "../types/types";
+import { Pokemon, Region, SortItem, Stat } from "../types/types";
 import { pokemonService } from "../core/services/pokemon.service";
 
 const statMap: Record<Stat, string> = {

@@ -1,4 +1,5 @@
-import { Pokemon, Type } from "../../types/types";
+import { Pokemon, Stat as StatType, Type } from "../../types/types";
+import { STATS } from "../../constants/constants";
 import bug from "../../assets/bug.svg";
 import dark from "../../assets/dark.svg";
 import dragon from "../../assets/dragon.svg";
@@ -17,6 +18,7 @@ import psychic from "../../assets/psychic.svg";
 import rock from "../../assets/rock.svg";
 import steel from "../../assets/steel.svg";
 import water from "../../assets/water.svg";
+import { Stat } from "./components/Stat";
 
 type PokemonProps = {
   pokemon: Pokemon;
@@ -44,7 +46,15 @@ const TYPE_ICONS: Record<Type, string> = {
 };
 
 const INDEX_PAD_COUNT = 3;
-const STAT_MAXIMUM = 255;
+
+const StatMap: Record<StatType, number> = {
+  healthPoints: 0,
+  attack: 1,
+  defense: 2,
+  specialAttack: 3,
+  specialDefense: 4,
+  speed: 5,
+};
 
 export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
   const customStyles: any = {
@@ -81,78 +91,14 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
       <section className="card__content">
         <h3 className="card__title">{pokemon.name}</h3>
         <ul aria-description="Stats resume">
-          <li className="card__stat" aria-label="Health points">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                Hp
-              </p>
-              <p>{pokemon.stats[0].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[0].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
-          <li className="card__stat" aria-label="Attack">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                At
-              </p>
-              <p>{pokemon.stats[1].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[1].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
-          <li className="card__stat" aria-label="Defense">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                Df
-              </p>
-              <p>{pokemon.stats[2].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[2].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
-          <li className="card__stat" aria-label="Special attack">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                SpA
-              </p>
-              <p>{pokemon.stats[3].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[3].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
-          <li className="card__stat" aria-label="Special defense">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                SpD
-              </p>
-              <p>{pokemon.stats[4].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[4].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
-          <li className="card__stat" aria-label="Speed">
-            <div className="stat__value">
-              <p className="stat__name" aria-hidden="true">
-                Spd
-              </p>
-              <p>{pokemon.stats[5].base_stat}</p>
-            </div>
-            <progress
-              value={pokemon.stats[5].base_stat}
-              max={STAT_MAXIMUM}
-            ></progress>
-          </li>
+          {STATS.map((stat) => (
+            <li key={`${pokemon.name}-${stat}`}>
+              <Stat
+                stat={stat}
+                value={pokemon.stats[StatMap[stat]].base_stat}
+              />
+            </li>
+          ))}
         </ul>
       </section>
     </article>

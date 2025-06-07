@@ -18,8 +18,8 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
-import { Region, Type } from "./types/types";
-import { REGIONS, SortItem, STATS } from "./constants/constants";
+import { Region, Type, SortItem } from "./types/types";
+import { REGIONS, STATS } from "./constants/constants";
 
 const TYPE_ICONS: Record<Type, string> = {
   bug,

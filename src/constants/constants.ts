@@ -41,5 +41,3 @@ export const STATS = [
 ] as const;
 
 export const SORT_ITEMS = ["default", ...STATS] as const;
-
-export type SortItem = (typeof SORT_ITEMS)[number];

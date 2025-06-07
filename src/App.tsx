@@ -17,7 +17,6 @@ import psychic from "./assets/psychic.svg";
 import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
-import pokeball from "./assets/pokeball.svg";
 import {
   Region,
   Type,
@@ -27,6 +26,8 @@ import {
   Stat,
 } from "./types/types";
 import { REGIONS } from "./constants/constants";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 const TYPE_ICONS: Record<Type, string> = {
   bug,
@@ -184,10 +185,7 @@ export const App = () => {
 
   return (
     <div className="layout">
-      <header className="header">
-        <img src={pokeball} alt="" className="header__logo" />
-        <p className="header__title">Pokédex</p>
-      </header>
+      <Header />
 
       {/* Searcher */}
       <main className="container">
@@ -637,12 +635,7 @@ export const App = () => {
         )}
       </main>
 
-      <footer className="footer">
-        <p>
-          ©{new Date().getFullYear()} Pokémon. ©1995 -{new Date().getFullYear()}{" "}
-          Nintendo/Creatures Inc./GAME FREAK inc. TM, ®Nintendo.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -18,8 +18,10 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
+import { Region, Type } from "./types/types";
+import { REGIONS, SortItem, STATS } from "./constants/constants";
 
-const TYPE_ICONS: any = {
+const TYPE_ICONS: Record<Type, string> = {
   bug,
   dark,
   dragon,
@@ -40,28 +42,16 @@ const TYPE_ICONS: any = {
   water,
 };
 
-const REGIONS = [
-  "kanto",
-  "johto",
-  "hoenn",
-  "sinnoh",
-  "unova",
-  "kalos",
-  "alola",
-  "galar",
-  "paldea",
-];
-
 export const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [filtering, setFiltering] = useState<any>(false);
+  const [filtering, setFiltering] = useState<boolean>(false);
   const [result, setResult] = useState<any>([]);
   const [finalResult, setFinalResult] = useState<any>([]);
-  const [searchTerm, setSearchTerm] = useState<any>("");
-  const [region, setRegion] = useState<any>("kanto");
-  const [isShowingRegions, setShowingRegions] = useState<any>(false);
-  const [isShowingSort, setShowingSort] = useState<any>(false);
-  const [sortBy, setSortBy] = useState<any>("default");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [region, setRegion] = useState<Region>("kanto");
+  const [isShowingRegions, setShowingRegions] = useState<boolean>(false);
+  const [isShowingSort, setShowingSort] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<SortItem>("default");
 
   useEffect(() => {
     const getPokemonsData = async () => {
@@ -130,7 +120,7 @@ export const App = () => {
 
   useEffect(() => {
     if (sortBy !== "default") {
-      if (sortBy === "hp") {
+      if (sortBy === "healthPoints") {
         setFinalResult((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find((stat) => stat.stat.name === "hp");
@@ -157,7 +147,7 @@ export const App = () => {
           })
         );
       }
-      if (sortBy === "special-attack") {
+      if (sortBy === "specialAttack") {
         setFinalResult((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
@@ -170,7 +160,7 @@ export const App = () => {
           })
         );
       }
-      if (sortBy === "special-defense") {
+      if (sortBy === "specialDefense") {
         setFinalResult((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
@@ -369,7 +359,7 @@ export const App = () => {
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      setShowingSort("default");
+                      setSortBy("default");
                       setShowingSort(false);
                     }
                   }}
@@ -380,15 +370,17 @@ export const App = () => {
                   role="radio"
                   aria-label="Health points"
                   tabIndex={0}
-                  className={`sort__pill ${sortBy === "hp" ? "active" : ""}`}
-                  aria-checked={sortBy === "hp"}
+                  className={`sort__pill ${
+                    sortBy === "healthPoints" ? "active" : ""
+                  }`}
+                  aria-checked={sortBy === "healthPoints"}
                   onClick={() => {
-                    setSortBy("hp");
+                    setSortBy("healthPoints");
                     setShowingSort(false);
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      setSortBy("hp");
+                      setSortBy("healthPoints");
                       setShowingSort(false);
                     }
                   }}

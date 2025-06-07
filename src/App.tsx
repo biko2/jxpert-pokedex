@@ -1,9 +1,9 @@
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { PokemonCard } from "./components/PokemonCard";
-import { SkeletonCard } from "./components/SkeletonCard";
-import { Filters } from "./components/Filters";
-import { usePokemons } from "./hooks/usePokemons";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { PokemonCard } from "@/components/PokemonCard";
+import { SkeletonCard } from "@/components/SkeletonCard";
+import { Filters } from "@/components/Filters";
+import { usePokemons } from "@/hooks/usePokemons";
 
 const SKELETON_CARD_COUNT = 6;
 

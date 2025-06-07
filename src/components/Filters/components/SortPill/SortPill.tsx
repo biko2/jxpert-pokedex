@@ -1,4 +1,4 @@
-import { SortItem } from "../../../../types/types";
+import { SortItem } from "@/types/types";
 
 type SortPillProps = {
   sortBy: SortItem;

@@ -1,4 +1,4 @@
-import { Stat as StatType } from "../../../../types/types";
+import { Stat as StatType } from "@/types/types";
 
 type StatProps = {
   stat: StatType;

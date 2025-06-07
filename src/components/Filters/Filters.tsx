@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { REGIONS, SORT_ITEMS } from "../../constants/constants";
-import { Region, SortItem } from "../../types/types";
+import { REGIONS, SORT_ITEMS } from "@/constants/constants";
+import { Region, SortItem } from "@/types/types";
 import { SortPill } from "./components/SortPill";
 
 type FilterProps = {

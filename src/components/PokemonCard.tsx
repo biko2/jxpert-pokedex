@@ -43,6 +43,9 @@ const TYPE_ICONS: Record<Type, string> = {
   water,
 };
 
+const INDEX_PAD_COUNT = 3;
+const STAT_MAXIMUM = 255;
+
 export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
   const customStyles: any = {
     "--color-type": `var(--color-${pokemon.types[0].type.name}`,
@@ -52,7 +55,7 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
     <article className="card" style={customStyles}>
       <header className="card__head">
         <div className="card__tag">
-          <p>#{pokemon.id.toString().padStart(3, "0")}</p>
+          <p>#{pokemon.id.toString().padStart(INDEX_PAD_COUNT, "0")}</p>
         </div>
         <div className="card__tag">
           <img
@@ -85,7 +88,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[0].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[0].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[0].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
           <li className="card__stat" aria-label="Attack">
             <div className="stat__value">
@@ -94,7 +100,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[1].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[1].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[1].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
           <li className="card__stat" aria-label="Defense">
             <div className="stat__value">
@@ -103,7 +112,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[2].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[2].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[2].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
           <li className="card__stat" aria-label="Special attack">
             <div className="stat__value">
@@ -112,7 +124,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[3].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[3].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[3].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
           <li className="card__stat" aria-label="Special defense">
             <div className="stat__value">
@@ -121,7 +136,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[4].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[4].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[4].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
           <li className="card__stat" aria-label="Speed">
             <div className="stat__value">
@@ -130,7 +148,10 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
               </p>
               <p>{pokemon.stats[5].base_stat}</p>
             </div>
-            <progress value={pokemon.stats[5].base_stat} max="255"></progress>
+            <progress
+              value={pokemon.stats[5].base_stat}
+              max={STAT_MAXIMUM}
+            ></progress>
           </li>
         </ul>
       </section>

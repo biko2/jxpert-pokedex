@@ -7,6 +7,8 @@ import { SkeletonCard } from "./components/SkeletonCard";
 import { Filters } from "./components/Filters";
 import { usePokemons } from "./hooks/usePokemons";
 
+const SKELETON_CARD_COUNT = 6;
+
 export const App = () => {
   const {
     region,
@@ -41,7 +43,7 @@ export const App = () => {
         <section>
           {isLoading && (
             <ul className="grid" aria-hidden="true">
-              {Array.from({ length: 6 }, (_, index) => {
+              {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => {
                 return (
                   <li key={`placeholder-card-${index}`}>
                     <SkeletonCard />

@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { Region, SortItem, PokemonList, Pokemon, Stat } from "./types/types";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { PokemonCard } from "./components/PokemonCard";

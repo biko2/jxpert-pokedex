@@ -59,7 +59,7 @@ export const Filters: React.FC<FilterProps> = ({
           role="combobox"
           aria-haspopup="listbox"
           aria-controls="reg-list"
-          aria-label="Select reg"
+          aria-label="Select region"
           aria-expanded={isShowingRegions}
           className={`dropdown__button ${isShowingRegions ? "active" : ""}`}
           onClick={() =>

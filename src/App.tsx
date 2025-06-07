@@ -54,6 +54,15 @@ const REGION_RANGES: Record<Region, { start: number; end: number }> = {
   paldea: { start: 905, end: 120 },
 };
 
+const getPokemons = async (region: Region): Promise<Pokemon[]> => {
+  const { results }: PokemonList = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?offset=${REGION_RANGES[region].start}&limit=${REGION_RANGES[region].end}`
+  ).then((res) => res.json());
+  return Promise.all(
+    results.map(async ({ url }) => await fetch(url).then((res) => res.json()))
+  );
+};
+
 export const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filtering, setFiltering] = useState<boolean>(false);
@@ -69,14 +78,8 @@ export const App = () => {
     const getPokemonsData = async () => {
       setLoading(true);
       setFiltering(true);
-      const { results }: PokemonList = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?offset=${REGION_RANGES[region].start}&limit=${REGION_RANGES[region].end}`
-      ).then((res) => res.json());
-      const fetchedPokemons: Pokemon[] = await Promise.all(
-        results.map(
-          async ({ url }) => await fetch(url).then((res) => res.json())
-        )
-      );
+
+      const fetchedPokemons = await getPokemons(region);
 
       setPokemons(fetchedPokemons);
       setProcessedPokemons(fetchedPokemons);

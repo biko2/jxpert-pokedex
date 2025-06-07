@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { REGIONS } from "../constants/constants";
+import { REGIONS, SORT_ITEMS } from "../constants/constants";
 import { Region, SortItem } from "../types/types";
 
 type FilterProps = {
@@ -9,6 +9,48 @@ type FilterProps = {
   onSearchChange: (searchTerm: string) => void;
   onRegionChange: (region: Region) => void;
   onSortChange: (sortBy: SortItem) => void;
+};
+
+type SortPillProps = {
+  sortBy: SortItem;
+  checked: boolean;
+  onSortChange: (sortBy: SortItem) => void;
+};
+
+const sortMap: Record<SortItem, { shortName: string; name: string }> = {
+  default: { shortName: "Default", name: "Default" },
+  healthPoints: { shortName: "Hp", name: "Health Points" },
+  attack: { shortName: "At", name: "Attack" },
+  defense: { shortName: "Df", name: "Defense" },
+  specialAttack: { shortName: "SpA", name: "Special Attack" },
+  specialDefense: { shortName: "SpD", name: "Special Defense" },
+  speed: { shortName: "Spd", name: "Speed" },
+};
+
+const SortPill: React.FC<SortPillProps> = ({
+  sortBy,
+  checked,
+  onSortChange,
+}) => {
+  const { shortName, name } = sortMap[sortBy];
+
+  return (
+    <span
+      role="radio"
+      aria-label={name}
+      tabIndex={0}
+      className={`sort__pill ${checked ? "active" : ""}`}
+      aria-checked={checked}
+      onClick={() => onSortChange(sortBy)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onSortChange(sortBy);
+        }
+      }}
+    >
+      {shortName}
+    </span>
+  );
 };
 
 export const Filters: React.FC<FilterProps> = ({
@@ -163,145 +205,17 @@ export const Filters: React.FC<FilterProps> = ({
         <article className="sort__wrapper">
           <h3 className="sort__title">Sort by</h3>
           <div className="sort__items" role="listbox" id="sort-list">
-            <span
-              role="radio"
-              aria-label="Default"
-              tabIndex={0}
-              className={`sort__pill ${sortBy === "default" ? "active" : ""}`}
-              aria-checked={sortBy === "default"}
-              onClick={() => {
-                onSortChange("default");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("default");
+            {SORT_ITEMS.map((sortItem) => (
+              <SortPill
+                key={sortItem}
+                sortBy={sortItem}
+                checked={sortBy === sortItem}
+                onSortChange={(item) => {
+                  onSortChange(item);
                   setShowingSort(false);
-                }
-              }}
-            >
-              Default
-            </span>
-            <span
-              role="radio"
-              aria-label="Health points"
-              tabIndex={0}
-              className={`sort__pill ${
-                sortBy === "healthPoints" ? "active" : ""
-              }`}
-              aria-checked={sortBy === "healthPoints"}
-              onClick={() => {
-                onSortChange("healthPoints");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("healthPoints");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              Hp
-            </span>
-            <span
-              role="radio"
-              aria-label="Attack"
-              tabIndex={0}
-              className={`sort__pill ${sortBy === "attack" ? "active" : ""}`}
-              aria-checked={sortBy === "attack"}
-              onClick={() => {
-                onSortChange("attack");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("attack");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              At
-            </span>
-            <span
-              role="radio"
-              aria-label="Defense"
-              tabIndex={0}
-              className={`sort__pill ${sortBy === "defense" ? "active" : ""}`}
-              aria-checked={sortBy === "defense"}
-              onClick={() => {
-                onSortChange("defense");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("defense");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              Df
-            </span>
-            <span
-              role="radio"
-              aria-label="Special attack"
-              tabIndex={0}
-              className={`sort__pill ${
-                sortBy === "specialAttack" ? "active" : ""
-              }`}
-              aria-checked={sortBy === "specialAttack"}
-              onClick={() => {
-                onSortChange("specialAttack");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("specialAttack");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              SpA
-            </span>
-            <span
-              role="radio"
-              aria-label="Special defense"
-              tabIndex={0}
-              className={`sort__pill ${
-                sortBy === "specialDefense" ? "active" : ""
-              }`}
-              aria-checked={sortBy === "specialDefense"}
-              onClick={() => {
-                onSortChange("specialDefense");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("specialDefense");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              SpD
-            </span>
-            <span
-              role="radio"
-              aria-label="Speed"
-              tabIndex={0}
-              className={`sort__pill ${sortBy === "speed" ? "active" : ""}`}
-              aria-checked={sortBy === "speed"}
-              onClick={() => {
-                onSortChange("speed");
-                setShowingSort(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  onSortChange("speed");
-                  setShowingSort(false);
-                }
-              }}
-            >
-              Spd
-            </span>
+                }}
+              />
+            ))}
           </div>
         </article>
       )}

@@ -42,6 +42,18 @@ const TYPE_ICONS: Record<Type, string> = {
   water,
 };
 
+const REGION_RANGES: Record<Region, { start: number; end: number }> = {
+  kanto: { start: 0, end: 151 },
+  johto: { start: 151, end: 100 },
+  hoenn: { start: 251, end: 135 },
+  sinnoh: { start: 386, end: 108 },
+  unova: { start: 494, end: 155 },
+  kalos: { start: 649, end: 72 },
+  alola: { start: 721, end: 88 },
+  galar: { start: 809, end: 96 },
+  paldea: { start: 905, end: 120 },
+};
+
 export const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filtering, setFiltering] = useState<boolean>(false);
@@ -57,41 +69,8 @@ export const App = () => {
     const getPokemonsData = async () => {
       setLoading(true);
       setFiltering(true);
-
-      let regStart, regEnd;
-      if (region === "kanto") {
-        regStart = 0;
-        regEnd = 151;
-      } else if (region === "johto") {
-        regStart = 151;
-        regEnd = 100;
-      } else if (region === "hoenn") {
-        regStart = 251;
-        regEnd = 135;
-      } else if (region === "sinnoh") {
-        regStart = 386;
-        regEnd = 108;
-      } else if (region === "unova") {
-        regStart = 494;
-        regEnd = 155;
-      } else if (region === "kalos") {
-        regStart = 649;
-        regEnd = 72;
-      } else if (region === "alola") {
-        regStart = 721;
-        regEnd = 88;
-      } else if (region === "galar") {
-        regStart = 809;
-        regEnd = 96;
-      } else if (region === "paldea") {
-        regStart = 905;
-        regEnd = 120;
-      } else {
-        regStart = 0;
-        regEnd = 151;
-      }
       const { results }: PokemonList = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?offset=${regStart}&limit=${regEnd}`
+        `https://pokeapi.co/api/v2/pokemon?offset=${REGION_RANGES[region].start}&limit=${REGION_RANGES[region].end}`
       ).then((res) => res.json());
       const fetchedPokemons: Pokemon[] = await Promise.all(
         results.map(

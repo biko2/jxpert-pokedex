@@ -57,8 +57,8 @@ const REGION_RANGES: Record<Region, { start: number; end: number }> = {
 export const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filtering, setFiltering] = useState<boolean>(false);
-  const [pokemons, setPokemons] = useState<any>([]);
-  const [processedPokemons, setProcessedPokemons] = useState<any>([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [processedPokemons, setProcessedPokemons] = useState<Pokemon[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [region, setRegion] = useState<Region>("kanto");
   const [isShowingRegions, setShowingRegions] = useState<boolean>(false);

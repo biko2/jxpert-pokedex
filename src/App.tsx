@@ -104,8 +104,6 @@ export const App = () => {
   const [processedPokemons, setProcessedPokemons] = useState<Pokemon[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [region, setRegion] = useState<Region>("kanto");
-  const [isShowingRegions, setShowingRegions] = useState<boolean>(false);
-  const [isShowingSort, setShowingSort] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<SortItem>("default");
 
   useEffect(() => {
@@ -143,7 +141,6 @@ export const App = () => {
     <div className="layout">
       <Header />
 
-      {/* Searcher */}
       <main className="container">
         <Filters
           region={region}

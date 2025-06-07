@@ -18,7 +18,14 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
-import { Region, Type, SortItem, PokemonList, Pokemon } from "./types/types";
+import {
+  Region,
+  Type,
+  SortItem,
+  PokemonList,
+  Pokemon,
+  Stat,
+} from "./types/types";
 import { REGIONS } from "./constants/constants";
 
 const TYPE_ICONS: Record<Type, string> = {
@@ -52,6 +59,76 @@ const REGION_RANGES: Record<Region, { start: number; end: number }> = {
   alola: { start: 721, end: 88 },
   galar: { start: 809, end: 96 },
   paldea: { start: 905, end: 120 },
+};
+
+const statMap: Record<Stat, string> = {
+  healthPoints: "hp",
+  attack: "attack",
+  defense: "defense",
+  specialAttack: "special-attack",
+  specialDefense: "special-defense",
+  speed: "speed",
+};
+
+const sortByStat = (stat: Stat, pokemons: Pokemon[]) => {
+  return [...pokemons].sort((a, b) => {
+    const aStat =
+      a.stats.find((s) => s.stat.name === statMap[stat])?.base_stat ?? 0;
+    const bStat =
+      b.stats.find((s) => s.stat.name === statMap[stat])?.base_stat ?? 0;
+    return bStat - aStat;
+  });
+};
+
+class SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return [...pokemons].sort((a, b) => a.id - b.id);
+  }
+}
+class HealthPointsSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("healthPoints", pokemons);
+  }
+}
+
+class AttackSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("attack", pokemons);
+  }
+}
+
+class DefenseSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("defense", pokemons);
+  }
+}
+
+class SpecialAttackSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("specialAttack", pokemons);
+  }
+}
+
+class SpecialDefenseSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("specialDefense", pokemons);
+  }
+}
+
+class SpeedSortStrategy extends SortStrategy {
+  public sort(pokemons: Pokemon[]): Pokemon[] {
+    return sortByStat("speed", pokemons);
+  }
+}
+
+const sortStrategies: Record<SortItem, typeof SortStrategy> = {
+  default: SortStrategy,
+  healthPoints: HealthPointsSortStrategy,
+  attack: AttackSortStrategy,
+  defense: DefenseSortStrategy,
+  specialAttack: SpecialAttackSortStrategy,
+  specialDefense: SpecialDefenseSortStrategy,
+  speed: SpeedSortStrategy,
 };
 
 const getPokemons = async (region: Region): Promise<Pokemon[]> => {
@@ -98,91 +175,11 @@ export const App = () => {
   }, [pokemons[0]?.id, searchTerm]);
 
   useEffect(() => {
-    if (sortBy !== "default") {
-      if (sortBy === "healthPoints") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "hp")?.base_stat ?? 0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "hp")?.base_stat ?? 0;
-            return bStat - aStat;
-          })
-        );
-      }
-      if (sortBy === "attack") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "attack")?.base_stat ??
-              0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "attack")?.base_stat ??
-              0;
-            return bStat - aStat;
-          })
-        );
-      }
-      if (sortBy === "defense") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "defense")?.base_stat ??
-              0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "defense")?.base_stat ??
-              0;
-            return bStat - aStat;
-          })
-        );
-      }
-      if (sortBy === "specialAttack") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "special-attack")
-                ?.base_stat ?? 0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "special-attack")
-                ?.base_stat ?? 0;
-            return bStat - aStat;
-          })
-        );
-      }
-      if (sortBy === "specialDefense") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "special-defense")
-                ?.base_stat ?? 0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "special-defense")
-                ?.base_stat ?? 0;
-            return bStat - aStat;
-          })
-        );
-      }
-      if (sortBy === "speed") {
-        setProcessedPokemons((prev) =>
-          [...prev].sort((a, b) => {
-            const aStat =
-              a.stats.find((stat) => stat.stat.name === "speed")?.base_stat ??
-              0;
-            const bStat =
-              b.stats.find((stat) => stat.stat.name === "speed")?.base_stat ??
-              0;
-            return bStat - aStat;
-          })
-        );
-      }
-    }
-    if (sortBy === "default") {
-      setProcessedPokemons((prev) =>
-        [...prev].sort((a, b) => {
-          return a.id - b.id;
-        })
-      );
-    }
+    const sortStrategy = new sortStrategies[sortBy]();
+
+    const sortedPokemons = sortStrategy.sort(processedPokemons);
+
+    setProcessedPokemons(sortedPokemons);
   }, [processedPokemons[0]?.id, sortBy]);
 
   return (

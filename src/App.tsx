@@ -18,8 +18,8 @@ import rock from "./assets/rock.svg";
 import steel from "./assets/steel.svg";
 import water from "./assets/water.svg";
 import pokeball from "./assets/pokeball.svg";
-import { Region, Type, SortItem } from "./types/types";
-import { REGIONS, STATS } from "./constants/constants";
+import { Region, Type, SortItem, PokemonList, Pokemon } from "./types/types";
+import { REGIONS } from "./constants/constants";
 
 const TYPE_ICONS: Record<Type, string> = {
   bug,
@@ -45,8 +45,8 @@ const TYPE_ICONS: Record<Type, string> = {
 export const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [filtering, setFiltering] = useState<boolean>(false);
-  const [result, setResult] = useState<any>([]);
-  const [finalResult, setFinalResult] = useState<any>([]);
+  const [pokemons, setPokemons] = useState<any>([]);
+  const [processedPokemons, setProcessedPokemons] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [region, setRegion] = useState<Region>("kanto");
   const [isShowingRegions, setShowingRegions] = useState<boolean>(false);
@@ -90,24 +90,25 @@ export const App = () => {
         regStart = 0;
         regEnd = 151;
       }
-      const { results }: any = await fetch(
+      const { results }: PokemonList = await fetch(
         `https://pokeapi.co/api/v2/pokemon?offset=${regStart}&limit=${regEnd}`
       ).then((res) => res.json());
-      const result = await Promise.all(
+      const fetchedPokemons: Pokemon[] = await Promise.all(
         results.map(
           async ({ url }) => await fetch(url).then((res) => res.json())
         )
       );
-      setResult(result);
-      setFinalResult(result);
+
+      setPokemons(fetchedPokemons);
+      setProcessedPokemons(fetchedPokemons);
       setLoading(false);
     };
     getPokemonsData();
   }, [region]);
 
   useEffect(() => {
-    setFinalResult(
-      result.filter(
+    setProcessedPokemons(
+      pokemons.filter(
         (res) =>
           res.name.includes(searchTerm.toLowerCase()) ||
           !!res.types.find((type) =>
@@ -116,12 +117,12 @@ export const App = () => {
       )
     );
     setFiltering(false);
-  }, [result[0]?.id, searchTerm]);
+  }, [pokemons[0]?.id, searchTerm]);
 
   useEffect(() => {
     if (sortBy !== "default") {
       if (sortBy === "healthPoints") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find((stat) => stat.stat.name === "hp");
             const bStat = b.stats.find((stat) => stat.stat.name === "hp");
@@ -130,7 +131,7 @@ export const App = () => {
         );
       }
       if (sortBy === "attack") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find((stat) => stat.stat.name === "attack");
             const bStat = b.stats.find((stat) => stat.stat.name === "attack");
@@ -139,7 +140,7 @@ export const App = () => {
         );
       }
       if (sortBy === "defense") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find((stat) => stat.stat.name === "defense");
             const bStat = b.stats.find((stat) => stat.stat.name === "defense");
@@ -148,7 +149,7 @@ export const App = () => {
         );
       }
       if (sortBy === "specialAttack") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
               (stat) => stat.stat.name === "special-attack"
@@ -161,7 +162,7 @@ export const App = () => {
         );
       }
       if (sortBy === "specialDefense") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find(
               (stat) => stat.stat.name === "special-defense"
@@ -174,7 +175,7 @@ export const App = () => {
         );
       }
       if (sortBy === "speed") {
-        setFinalResult((prev) =>
+        setProcessedPokemons((prev) =>
           [...prev].sort((a, b) => {
             const aStat = a.stats.find((stat) => stat.stat.name === "speed");
             const bStat = b.stats.find((stat) => stat.stat.name === "speed");
@@ -184,13 +185,13 @@ export const App = () => {
       }
     }
     if (sortBy === "default") {
-      setFinalResult((prev) =>
+      setProcessedPokemons((prev) =>
         [...prev].sort((a, b) => {
           return a.id - b.id;
         })
       );
     }
-  }, [finalResult[0]?.id, sortBy]);
+  }, [processedPokemons[0]?.id, sortBy]);
 
   return (
     <div className="layout">
@@ -514,9 +515,9 @@ export const App = () => {
             </div>
           )}
           {/* Prints cards */}
-          {!filtering && !loading && finalResult.length > 0 && (
+          {!filtering && !loading && processedPokemons.length > 0 && (
             <ul className="grid">
-              {finalResult.map((res) => {
+              {processedPokemons.map((res) => {
                 const customStyles: any = {
                   "--color-type": `var(--color-${res.types[0].type.name}`,
                 };
@@ -642,7 +643,7 @@ export const App = () => {
           )}
         </section>
 
-        {!loading && finalResult.length === 0 && (
+        {!loading && processedPokemons.length === 0 && (
           <p className="noresults">No results for "{searchTerm}"</p>
         )}
       </main>

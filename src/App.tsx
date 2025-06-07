@@ -20,6 +20,10 @@ export const App = () => {
     onSortChange,
   } = usePokemons();
 
+  const isLoading = loading || filtering;
+  const showResults = !loading && !filtering && pokemons.length > 0;
+  const noResults = !loading && !filtering && pokemons.length === 0;
+
   return (
     <div className="layout">
       <Header />
@@ -35,7 +39,7 @@ export const App = () => {
         />
 
         <section>
-          {(loading || filtering) && (
+          {isLoading && (
             <ul className="grid" aria-hidden="true">
               {Array.from({ length: 6 }, (_, index) => {
                 return (
@@ -47,7 +51,7 @@ export const App = () => {
             </ul>
           )}
 
-          {!filtering && !loading && pokemons.length > 0 && (
+          {showResults && (
             <ul className="grid">
               {pokemons.map((pokemon) => {
                 return (
@@ -60,7 +64,7 @@ export const App = () => {
           )}
         </section>
 
-        {!loading && pokemons.length === 0 && (
+        {noResults && (
           <p className="noresults">No results for "{searchTerm}"</p>
         )}
       </main>

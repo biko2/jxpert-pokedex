@@ -1,4 +1,4 @@
-import { Pokemon, PokemonList, Region } from "../../types/types";
+import { Pokemon, PokemonList, Region } from "@/types/types";
 
 const REGION_RANGES: Record<Region, { start: number; end: number }> = {
   kanto: { start: 0, end: 151 },

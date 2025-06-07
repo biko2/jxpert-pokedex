@@ -1,4 +1,4 @@
-import { REGIONS, SORT_ITEMS, STATS, TYPES } from "../constants/constants";
+import { REGIONS, SORT_ITEMS, STATS, TYPES } from "@/constants/constants";
 
 export type Type = (typeof TYPES)[number];
 export type Region = (typeof REGIONS)[number];

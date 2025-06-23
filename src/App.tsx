@@ -56,7 +56,11 @@ export const App = () => {
               {pokemons.map((pokemon) => {
                 return (
                   <li key={`pokemon-card-${pokemon.id}`}>
-                    <PokemonCard pokemon={pokemon} />
+                    <PokemonCard
+                      pokemon={pokemon}
+                      isFavourite={false}
+                      onFavouriteToggle={() => {}}
+                    />
                   </li>
                 );
               })}

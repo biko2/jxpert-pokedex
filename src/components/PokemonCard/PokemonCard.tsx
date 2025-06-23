@@ -21,9 +21,12 @@ import rock from "@/assets/rock.svg";
 import steel from "@/assets/steel.svg";
 import water from "@/assets/water.svg";
 import { Stat } from "./components/Stat";
+import { Favourite } from "./components/Favourite";
 
 type PokemonProps = {
   pokemon: Pokemon;
+  isFavourite: boolean;
+  onFavouriteToggle: (isChecked: boolean) => void;
 };
 
 const TYPE_ICONS: Record<Type, string> = {
@@ -58,7 +61,11 @@ const StatMap: Record<StatType, number> = {
   speed: 5,
 };
 
-export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
+export const PokemonCard: React.FC<PokemonProps> = ({
+  pokemon,
+  isFavourite,
+  onFavouriteToggle,
+}) => {
   const customStyles: any = {
     "--color-type": `var(--color-${pokemon.types[0]}`,
   };
@@ -91,6 +98,7 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
         alt={`${pokemon.name} artwork`}
       />
       <section className="card__content">
+        <Favourite isChecked={isFavourite} onClick={onFavouriteToggle} />
         <h3 className="card__title">{pokemon.name}</h3>
         <ul aria-description="Stats resume">
           {STATS.map((stat) => (

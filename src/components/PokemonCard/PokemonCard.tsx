@@ -26,7 +26,7 @@ import { Favourite } from "./components/Favourite";
 type PokemonProps = {
   pokemon: Pokemon;
   isFavourite: boolean;
-  onFavouriteToggle: (isChecked: boolean) => void;
+  onFavouriteToggle: (pokemon: Pokemon, isChecked: boolean) => void;
 };
 
 const TYPE_ICONS: Record<Type, string> = {
@@ -98,7 +98,12 @@ export const PokemonCard: React.FC<PokemonProps> = ({
         alt={`${pokemon.name} artwork`}
       />
       <section className="card__content">
-        <Favourite isChecked={isFavourite} onClick={onFavouriteToggle} />
+        <Favourite
+          isChecked={isFavourite}
+          onClick={(isChecked: boolean) =>
+            onFavouriteToggle(pokemon, isChecked)
+          }
+        />
         <h3 className="card__title">{pokemon.name}</h3>
         <ul aria-description="Stats resume">
           {STATS.map((stat) => (

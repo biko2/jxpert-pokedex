@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Region, SortItem } from "@/types/types";
-import { pokemonService } from "@/core/services/pokemon.service";
 import { Pokemon } from "@/core/domain/models/Pokemon";
 import { Stat } from "@/core/domain/models/Stat";
+import { container } from "@/di/container";
 
 const sortByStat = (stat: Stat, pokemons: Pokemon[]) => {
   return [...pokemons].sort((a, b) => {
@@ -77,7 +77,9 @@ export const usePokemons = () => {
       setLoading(true);
       setFiltering(true);
 
-      const fetchedPokemons = await pokemonService.getByRegion(region);
+      const fetchedPokemons = await container.pokemonService.getByRegion(
+        region
+      );
 
       setPokemons(fetchedPokemons);
       setProcessedPokemons(fetchedPokemons);

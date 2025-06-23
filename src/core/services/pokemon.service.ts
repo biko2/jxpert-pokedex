@@ -1,22 +1,27 @@
 import { Region } from "@/core/domain/models/Region";
 import { Pokemon } from "@/core/domain/models/Pokemon";
-import { PokeApiAdapter } from "@/core/infrastructure/repositories/PokeApiPokemonRepository/adapter";
 import { PokemonRepository } from "@/core/domain/ports/PokemonRepository";
-
-const getByRegion = async (region: Region): Promise<Pokemon[]> => {
-  const repository = new PokeApiAdapter();
-
-  return await repository.getByRegion(region);
-};
-
-export const pokemonService = {
-  getByRegion,
-};
+import { FavouritePokemonRepository } from "@/core/domain/ports/FavouritePokemonRepository";
 
 export class PokemonService {
-  constructor(private repository: PokemonRepository) {}
+  constructor(
+    private repository: PokemonRepository,
+    private favouriteRepository: FavouritePokemonRepository
+  ) {}
 
   async getByRegion(region: Region): Promise<Pokemon[]> {
     return await this.repository.getByRegion(region);
+  }
+
+  async getFavourites(): Promise<Pokemon[]> {
+    return await this.favouriteRepository.getFavourites();
+  }
+
+  async addFavourite(pokemon: Pokemon): Promise<void> {
+    await this.favouriteRepository.addFavourite(pokemon);
+  }
+
+  async removeFavourite(pokemon: Pokemon): Promise<void> {
+    await this.favouriteRepository.removeFavourite(pokemon);
   }
 }

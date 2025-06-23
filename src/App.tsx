@@ -4,6 +4,7 @@ import { PokemonCard } from "@/components/PokemonCard";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import { Filters } from "@/components/Filters";
 import { usePokemons } from "@/hooks/usePokemons";
+import { useFavourites } from "@/hooks/useFavourites";
 
 const SKELETON_CARD_COUNT = 6;
 
@@ -19,6 +20,8 @@ export const App = () => {
     onRegionChange,
     onSortChange,
   } = usePokemons();
+
+  const { favourites, onFavouriteToggle } = useFavourites();
 
   const isLoading = loading || filtering;
   const showResults = !loading && !filtering && pokemons.length > 0;
@@ -58,8 +61,10 @@ export const App = () => {
                   <li key={`pokemon-card-${pokemon.id}`}>
                     <PokemonCard
                       pokemon={pokemon}
-                      isFavourite={false}
-                      onFavouriteToggle={() => {}}
+                      isFavourite={favourites.some(
+                        (favourite) => favourite.id === pokemon.id
+                      )}
+                      onFavouriteToggle={onFavouriteToggle}
                     />
                   </li>
                 );

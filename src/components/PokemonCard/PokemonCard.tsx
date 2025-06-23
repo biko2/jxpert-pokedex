@@ -1,5 +1,7 @@
-import { Pokemon, Stat as StatType, Type } from "@/types/types";
-import { STATS } from "@/constants/constants";
+import { Stat as StatType } from "@/core/domain/models/Stat";
+import { Pokemon } from "@/core/domain/models/Pokemon";
+import { Type } from "@/core/domain/models/type";
+import { STATS } from "@/core/domain/constants/stats";
 import bug from "@/assets/bug.svg";
 import dark from "@/assets/dark.svg";
 import dragon from "@/assets/dragon.svg";
@@ -58,7 +60,7 @@ const StatMap: Record<StatType, number> = {
 
 export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
   const customStyles: any = {
-    "--color-type": `var(--color-${pokemon.types[0].type.name}`,
+    "--color-type": `var(--color-${pokemon.types[0]}`,
   };
 
   return (
@@ -69,22 +71,22 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
         </div>
         <div className="card__tag">
           <img
-            src={TYPE_ICONS[pokemon.types[0].type.name]}
+            src={TYPE_ICONS[pokemon.types[0]]}
             className="card__type"
-            alt={`${pokemon.types[0].type.name} primary type`}
+            alt={`${pokemon.types[0]} primary type`}
           />
           {pokemon.types[1] && (
             <img
-              src={TYPE_ICONS[pokemon.types[1].type.name]}
+              src={TYPE_ICONS[pokemon.types[1]]}
               className="card__type"
-              alt={`${pokemon.types[1].type.name} secondary type`}
+              alt={`${pokemon.types[1]} secondary type`}
             />
           )}
         </div>
       </header>
       <img
         className="card__avatar"
-        src={pokemon.sprites.other["official-artwork"].front_default}
+        src={pokemon.image}
         loading="lazy"
         alt={`${pokemon.name} artwork`}
       />
@@ -93,10 +95,7 @@ export const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
         <ul aria-description="Stats resume">
           {STATS.map((stat) => (
             <li key={`${pokemon.name}-${stat}`}>
-              <Stat
-                stat={stat}
-                value={pokemon.stats[StatMap[stat]].base_stat}
-              />
+              <Stat stat={stat} value={pokemon.stats[StatMap[stat]].value} />
             </li>
           ))}
         </ul>

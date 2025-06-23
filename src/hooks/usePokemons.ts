@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Pokemon, Region, SortItem, Stat } from "@/types/types";
+import { Region, SortItem } from "@/types/types";
 import { pokemonService } from "@/core/services/pokemon.service";
+import { Pokemon } from "@/core/domain/models/Pokemon";
+import { Stat } from "@/core/domain/models/Stat";
 
 const statMap: Record<Stat, string> = {
   healthPoints: "hp",
@@ -13,10 +15,8 @@ const statMap: Record<Stat, string> = {
 
 const sortByStat = (stat: Stat, pokemons: Pokemon[]) => {
   return [...pokemons].sort((a, b) => {
-    const aStat =
-      a.stats.find((s) => s.stat.name === statMap[stat])?.base_stat ?? 0;
-    const bStat =
-      b.stats.find((s) => s.stat.name === statMap[stat])?.base_stat ?? 0;
+    const aStat = a.stats.find((s) => s.name === statMap[stat])?.value ?? 0;
+    const bStat = b.stats.find((s) => s.name === statMap[stat])?.value ?? 0;
     return bStat - aStat;
   });
 };
@@ -98,7 +98,7 @@ export const usePokemons = () => {
   useEffect(() => {
     const hasNameOrType = ({ name, types }: Pokemon) =>
       name.includes(searchTerm.toLowerCase()) ||
-      types.some((type) => type.type.name.startsWith(searchTerm.toLowerCase()));
+      types.some((type) => type.startsWith(searchTerm.toLowerCase()));
 
     setProcessedPokemons(pokemons.filter(hasNameOrType));
     setFiltering(false);

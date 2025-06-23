@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  max-width: 920px;
+  height: inherit;
+  margin-inline: auto;
+
+  padding-inline: var(--spacing-m);
+}
+
+.team {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 100%;
+
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image: radial-gradient(
+      circle at 20% 90%,
+      hsla(14, 100%, 64%, 0.3) 20%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      hsla(247, 100%, 63%, 0.3) 15%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      hsla(41, 92%, 66%, 0.8) 20%,
+      transparent 60%
+    );
+  border: 8px solid var(--color-neutral-0);
+  box-shadow: var(--shadow-l);
+}
+
+.team:before {
+  content: "";
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  transform: translateY(70%);
+
+  background-color: inherit;
+
+  width: 100%;
+  aspect-ratio: 1;
+
+  filter: hue-rotate(25deg) brightness(1.5) blur(200px);
+  border-radius: 50%;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: var(--spacing-2xs) var(--spacing-s);
+
+  font-size: 1.25rem;
+  font-weight: bold;
+
+  background-color: var(--color-neutral-0);
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+
+  color: var(--color-neutral-900);
+}
+
+.member {
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  bottom: 0;
+  z-index: 1;
+
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center bottom;
+
+  filter: drop-shadow(
+    0px 10px 10px color-mix(in oklab, var(--color-neutral-800), transparent 75%)
+  );
+}
+
+.sprites {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+
+  padding: var(--spacing-2xs) var(--spacing-xs);
+
+  background-color: var(--color-neutral-0);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.sprite {
+  width: var(--spacing-3xl);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .team {
+    aspect-ratio: 5 / 4;
+  }
+}
+
+@media (max-width: 500px) {
+  .team {
+    aspect-ratio: 1 / 1;
+  }
+}

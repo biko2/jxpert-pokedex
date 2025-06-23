@@ -42,6 +42,10 @@ export const mapToPokemon = (pokemon: PokemonDTO): Pokemon => {
       name: mapStat[stat.stat.name],
       value: stat.base_stat,
     })),
-    image: pokemon.sprites.other["official-artwork"].front_default,
+    height: pokemon.height,
+    images: {
+      artwork: pokemon.sprites.other["official-artwork"].front_default,
+      sprite: pokemon.sprites.versions["generation-viii"].icons.front_default,
+    },
   };
 };

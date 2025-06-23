@@ -93,7 +93,7 @@ export const PokemonCard: React.FC<PokemonProps> = ({
       </header>
       <img
         className="card__avatar"
-        src={pokemon.image}
+        src={pokemon.images.artwork}
         loading="lazy"
         alt={`${pokemon.name} artwork`}
       />

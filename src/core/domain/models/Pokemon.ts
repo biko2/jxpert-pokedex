@@ -11,5 +11,9 @@ export type Pokemon = {
   name: string;
   types: Type[];
   stats: StatContent[];
-  image: string;
+  height: number;
+  images: {
+    artwork: string;
+    sprite: string;
+  };
 };

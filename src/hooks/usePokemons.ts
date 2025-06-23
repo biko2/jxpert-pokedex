@@ -4,19 +4,10 @@ import { pokemonService } from "@/core/services/pokemon.service";
 import { Pokemon } from "@/core/domain/models/Pokemon";
 import { Stat } from "@/core/domain/models/Stat";
 
-const statMap: Record<Stat, string> = {
-  healthPoints: "hp",
-  attack: "attack",
-  defense: "defense",
-  specialAttack: "special-attack",
-  specialDefense: "special-defense",
-  speed: "speed",
-};
-
 const sortByStat = (stat: Stat, pokemons: Pokemon[]) => {
   return [...pokemons].sort((a, b) => {
-    const aStat = a.stats.find((s) => s.name === statMap[stat])?.value ?? 0;
-    const bStat = b.stats.find((s) => s.name === statMap[stat])?.value ?? 0;
+    const aStat = a.stats.find((s) => s.name === stat)?.value ?? 0;
+    const bStat = b.stats.find((s) => s.name === stat)?.value ?? 0;
     return bStat - aStat;
   });
 };

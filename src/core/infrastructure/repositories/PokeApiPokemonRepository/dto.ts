@@ -8,6 +8,34 @@ export type PokemonListDTO = {
   }[];
 };
 
+export type StatDTO =
+  | "hp"
+  | "attack"
+  | "defense"
+  | "special-attack"
+  | "special-defense"
+  | "speed";
+
+export type TypeDTO =
+  | "bug"
+  | "dark"
+  | "dragon"
+  | "electric"
+  | "fairy"
+  | "fighting"
+  | "fire"
+  | "flying"
+  | "ghost"
+  | "grass"
+  | "ground"
+  | "ice"
+  | "normal"
+  | "poison"
+  | "psychic"
+  | "rock"
+  | "steel"
+  | "water";
+
 export type PokemonDTO = {
   base_experience: number;
   height: number;
@@ -116,14 +144,14 @@ export type PokemonDTO = {
     base_stat: number;
     effort: number;
     stat: {
-      name: string;
+      name: StatDTO;
       url: string;
     };
   }[];
   types: {
     slot: number;
     type: {
-      name: string;
+      name: TypeDTO;
       url: string;
     };
   }[];

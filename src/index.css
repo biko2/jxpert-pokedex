@@ -90,6 +90,10 @@ body {
   background-color: var(--color-neutral-50);
 }
 
+a {
+  text-decoration: none;
+}
+
 ul,
 ol {
   list-style: none;
@@ -102,6 +106,10 @@ button {
 
 #root {
   min-height: inherit;
+}
+
+.link {
+  color: var(--color-accent);
 }
 
 .notfound {
@@ -141,7 +149,7 @@ button {
 .header {
   display: flex;
   align-items: center;
-  gap: var(--spacing-m);
+  justify-content: space-between;
 
   position: sticky;
   z-index: 3;
@@ -158,6 +166,12 @@ button {
   );
   backdrop-filter: blur(15px);
   box-shadow: var(--shadow-m);
+}
+
+.header__link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-m);
 }
 
 .header__logo {

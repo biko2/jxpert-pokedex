@@ -28,57 +28,49 @@ export const App = () => {
   const noResults = !loading && !filtering && pokemons.length === 0;
 
   return (
-    <div className="layout">
-      <Header />
+    <>
+      <Filters
+        region={region}
+        searchTerm={searchTerm}
+        sortBy={sortBy}
+        onSearchChange={onSearchChange}
+        onRegionChange={onRegionChange}
+        onSortChange={onSortChange}
+      />
 
-      <main className="container">
-        <Filters
-          region={region}
-          searchTerm={searchTerm}
-          sortBy={sortBy}
-          onSearchChange={onSearchChange}
-          onRegionChange={onRegionChange}
-          onSortChange={onSortChange}
-        />
-
-        <section>
-          {isLoading && (
-            <ul className="grid" aria-hidden="true">
-              {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => {
-                return (
-                  <li key={`placeholder-card-${index}`}>
-                    <SkeletonCard />
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-
-          {showResults && (
-            <ul className="grid">
-              {pokemons.map((pokemon) => {
-                return (
-                  <li key={`pokemon-card-${pokemon.id}`}>
-                    <PokemonCard
-                      pokemon={pokemon}
-                      isFavourite={favourites.some(
-                        (favourite) => favourite.id === pokemon.id
-                      )}
-                      onFavouriteToggle={onFavouriteToggle}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-
-        {noResults && (
-          <p className="noresults">No results for "{searchTerm}"</p>
+      <section>
+        {isLoading && (
+          <ul className="grid" aria-hidden="true">
+            {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => {
+              return (
+                <li key={`placeholder-card-${index}`}>
+                  <SkeletonCard />
+                </li>
+              );
+            })}
+          </ul>
         )}
-      </main>
 
-      <Footer />
-    </div>
+        {showResults && (
+          <ul className="grid">
+            {pokemons.map((pokemon) => {
+              return (
+                <li key={`pokemon-card-${pokemon.id}`}>
+                  <PokemonCard
+                    pokemon={pokemon}
+                    isFavourite={favourites.some(
+                      (favourite) => favourite.id === pokemon.id
+                    )}
+                    onFavouriteToggle={onFavouriteToggle}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+
+      {noResults && <p className="noresults">No results for "{searchTerm}"</p>}
+    </>
   );
 };

@@ -1,5 +1,3 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { PokemonCard } from "@/components/PokemonCard";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import { Filters } from "@/components/Filters";
@@ -8,7 +6,7 @@ import { useFavourites } from "@/hooks/useFavourites";
 
 const SKELETON_CARD_COUNT = 6;
 
-export const App = () => {
+export const Pokedex = () => {
   const {
     region,
     searchTerm,

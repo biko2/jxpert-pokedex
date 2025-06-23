@@ -1,12 +1,12 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Layout } from "@/components/Layout";
-import { App } from "./App";
+import { Pokedex } from "@/views/Pokedex";
 import { DreamTeam } from "@/views/DreamTeam";
 
 const routes = {
   home: {
     path: "/",
-    element: App,
+    element: Pokedex,
   },
   dreamTeam: {
     path: "/dream-team",
